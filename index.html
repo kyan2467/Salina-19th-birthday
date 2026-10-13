@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday, My Star ✨ | October 14</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Canvas Confetti Library for Celebrations -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="locked-body">
+
+  <!-- 🌌 Canvas Background for Twinkling Stars & Nebulae -->
+  <canvas id="starfield-canvas"></canvas>
+
+  <!-- ========================================================= -->
+  <!-- 🔐 PASSCODE LOCK SCREEN                                   -->
+  <!-- ========================================================= -->
+  <div id="lock-screen" class="lock-screen active">
+    <div class="lock-card celestial-glass">
+      <div class="lock-icon-container">
+        <div class="star-halo"></div>
+        <span class="lock-symbol">✨</span>
+      </div>
+      <h2 class="lock-title">A Starry Surprise Awaits</h2>
+      <p class="lock-subtitle">This universe was crafted for someone truly special. Enter the secret code to enter.</p>
+      
+      <form id="passcode-form" autocomplete="off" onsubmit="event.preventDefault(); handleUnlock();">
+        <div class="passcode-input-wrapper">
+          <input 
+            type="password" 
+            id="passcode-input" 
+            placeholder="Enter passcode..." 
+            maxlength="32"
+            autofocus
+          />
+          <button type="button" id="toggle-password-btn" aria-label="Show password">👁️</button>
+        </div>
+        <p id="passcode-hint" class="passcode-hint"></p>
+        <button type="submit" id="unlock-btn" class="celestial-btn glow-btn">
+          <span>Unlock The Stars</span> 🪐
+        </button>
+      </form>
+      <p id="lock-error" class="lock-error-msg"></p>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- 🌟 MAIN CONTENT CONTAINER (Unlocked)                     -->
+  <!-- ========================================================= -->
+  <div id="main-content" class="main-content hidden">
+
+    <!-- 🌌 Celestial Navigation Bar -->
+    <header class="celestial-nav celestial-glass">
+      <div class="nav-brand">
+        <span class="nav-star">✦</span>
+        <span id="nav-recipient-name">For You</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#hero">Countdown</a>
+        <a href="#letter-section">Love Letter</a>
+        <a href="#cake-section">Birthday Cake</a>
+        <a href="#memories-section">Memories</a>
+        <a href="#reasons-section">Reasons</a>
+        <a href="#quiz-section">Quiz</a>
+      </nav>
+      <div class="nav-actions">
+        <button id="lanterns-btn" class="nav-lantern-btn" title="Release Rapunzel Floating Lanterns 🏮">
+          <span>🏮 Release Lanterns</span>
+        </button>
+        <button id="music-toggle-btn" class="nav-icon-btn" title="Toggle Celestial Music">
+          <span id="music-icon">🎵</span>
+          <span id="music-status-text" class="sr-only">Play Music</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ========================================================= -->
+    <!-- 🌠 HERO & COUNTDOWN SECTION                              -->
+    <!-- ========================================================= -->
+    <section id="hero" class="hero-section">
+      <div class="hero-badge">
+        <span class="badge-sparkle">✦</span>
+        <span>October 14th Celebration</span>
+        <span class="badge-sparkle">✦</span>
+      </div>
+
+      <h1 class="hero-title">
+        Happy Birthday, <br/>
+        <span class="recipient-highlight" id="hero-recipient-name">My Love</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        <em>"All at once everything looks different, now that I see you."</em> 🏮✨<br/>
+        Out of all the billions of stars in the cosmos, you are my absolute favorite.
+      </p>
+
+      <!-- Countdown Container -->
+      <div class="countdown-card celestial-glass">
+        <h3 id="countdown-label" class="countdown-label">Counting Down To October 14th 💫</h3>
+        
+        <div class="countdown-grid" id="countdown-grid">
+          <div class="time-box">
+            <span class="time-value" id="days">00</span>
+            <span class="time-label">Days</span>
+          </div>
+          <div class="time-separator">:</div>
+          <div class="time-box">
+            <span class="time-value" id="hours">00</span>
+            <span class="time-label">Hours</span>
+          </div>
+          <div class="time-separator">:</div>
+          <div class="time-box">
+            <span class="time-value" id="minutes">00</span>
+            <span class="time-label">Minutes</span>
+          </div>
+          <div class="time-separator">:</div>
+          <div class="time-box">
+            <span class="time-value" id="seconds">00</span>
+            <span class="time-label">Seconds</span>
+          </div>
+        </div>
+
+        <div id="birthday-banner" class="birthday-banner hidden">
+          <h2>🎉 IT'S OCTOBER 14TH! HAPPY BIRTHDAY! 🎂</h2>
+          <p>Today the whole universe shines in celebration of you!</p>
+        </div>
+
+        <!-- Relationship Milestone Counter -->
+        <div class="anniversary-pill">
+          💖 In love for <span id="days-in-love">1,054</span> days since November 24, 2023 💫
+        </div>
+
+        <!-- Preview mode switch for user testing -->
+        <button id="preview-bday-mode-btn" class="preview-tag-btn">
+          ✨ <span id="preview-mode-text">Preview "Birthday Day" Celebration Mode</span>
+        </button>
+      </div>
+
+      <div class="scroll-prompt">
+        <span>Scroll to unwrap your surprises</span>
+        <div class="scroll-arrow">↓</div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 💌 INTERACTIVE LOVE LETTER & ENVELOPE                    -->
+    <!-- ========================================================= -->
+    <section id="letter-section" class="letter-section section-padding">
+      <div class="section-header">
+        <span class="section-tag">A Message For You</span>
+        <h2 class="section-title">The Celestial Envelope</h2>
+        <p class="section-desc">Tap the wax seal to unfold a letter written just for your heart.</p>
+      </div>
+
+      <div class="envelope-container">
+        <!-- Interactive Envelope -->
+        <div id="envelope" class="envelope">
+          <div class="envelope-flap" id="envelope-flap"></div>
+          <div class="envelope-pocket"></div>
+          
+          <!-- Wax Seal -->
+          <div id="wax-seal" class="wax-seal" title="Tap to open letter!">
+            <div class="seal-inner">
+              <span>✦</span>
+            </div>
+            <div class="seal-glow"></div>
+            <span class="seal-tooltip">Open Me 💌</span>
+          </div>
+
+          <!-- Starlit Letter Paper inside -->
+          <div id="letter-paper" class="letter-paper">
+            <div class="paper-stamps">
+              <span class="postage-stamp">✨ 10.14</span>
+            </div>
+            <h3 id="letter-title" class="letter-title">Happy Birthday, My Star</h3>
+            <span id="letter-date" class="letter-date">October 14</span>
+            
+            <div id="letter-body" class="letter-body">
+              <!-- Rendered dynamically from config.js -->
+            </div>
+
+            <div class="letter-footer">
+              <p class="sign-off" id="letter-signoff">Forever and always,</p>
+              <p class="signature" id="letter-sender">Yours Truly</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="envelope-actions">
+        <button id="toggle-letter-btn" class="celestial-btn secondary-btn">
+          <span id="toggle-letter-text">Open Envelope 💌</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 🎂 INTERACTIVE BIRTHDAY CAKE & CANDLE BLOWING            -->
+    <!-- ========================================================= -->
+    <section id="cake-section" class="cake-section section-padding">
+      <div class="section-header">
+        <span class="section-tag">Make A Wish</span>
+        <h2 class="section-title">The Starry Birthday Cake</h2>
+        <p class="section-desc">Click/tap on the candles or click the button below to blow them out and make your wish!</p>
+      </div>
+
+      <div class="cake-stage celestial-glass">
+        <!-- Wish instruction -->
+        <div class="wish-instruction">
+          <p id="candle-status-text">🌟 <span id="candles-remaining">5</span> candles glowing bright!</p>
+        </div>
+
+        <!-- 3-Tier Illustrated Cake -->
+        <div class="cake-wrapper">
+          <!-- Candles Layer -->
+          <div class="candles-container" id="candles-container">
+            <div class="candle active" data-index="1">
+              <div class="flame"></div>
+              <div class="wick"></div>
+              <div class="candle-stick candle-gold"></div>
+            </div>
+            <div class="candle active" data-index="2">
+              <div class="flame"></div>
+              <div class="wick"></div>
+              <div class="candle-stick candle-purple"></div>
+            </div>
+            <div class="candle active" data-index="3">
+              <div class="flame"></div>
+              <div class="wick"></div>
+              <div class="candle-stick candle-gold"></div>
+            </div>
+            <div class="candle active" data-index="4">
+              <div class="flame"></div>
+              <div class="wick"></div>
+              <div class="candle-stick candle-purple"></div>
+            </div>
+            <div class="candle active" data-index="5">
+              <div class="flame"></div>
+              <div class="wick"></div>
+              <div class="candle-stick candle-gold"></div>
+            </div>
+          </div>
+
+          <!-- Cake Tiers -->
+          <div class="cake-tier tier-top">
+            <div class="frosting-drips">
+              <span class="drip"></span><span class="drip"></span><span class="drip"></span><span class="drip"></span>
+            </div>
+            <div class="cake-stars">✨ 🌟 ✨</div>
+          </div>
+
+          <div class="cake-tier tier-middle">
+            <div class="tier-pattern">✦ ⋆ ✦ ⋆ ✦</div>
+            <div class="frosting-drips">
+              <span class="drip"></span><span class="drip"></span><span class="drip"></span><span class="drip"></span><span class="drip"></span>
+            </div>
+          </div>
+
+          <div class="cake-tier tier-bottom">
+            <div class="cake-ribbon">
+              <span>HAPPY OCTOBER 14TH</span>
+            </div>
+          </div>
+
+          <!-- Cake Plate / Pedestal -->
+          <div class="cake-plate"></div>
+        </div>
+
+        <!-- Controls -->
+        <div class="cake-controls">
+          <button id="blow-candles-btn" class="celestial-btn glow-btn">
+            💨 Blow Out Candles & Make a Wish!
+          </button>
+          <button id="relight-candles-btn" class="celestial-btn secondary-btn hidden">
+            🔥 Relight Candles
+          </button>
+        </div>
+
+        <!-- Wish Reveal Card (Hidden until blown) -->
+        <div id="wish-reveal-modal" class="wish-reveal-modal hidden">
+          <div class="wish-reveal-content celestial-glass">
+            <div class="wish-stars">🪐 🎂 ✨</div>
+            <h3>Your Wish Has Been Sent to the Stars!</h3>
+            <p id="cake-wish-text"></p>
+            <button id="close-wish-btn" class="celestial-btn secondary-btn">Thank You ✨</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 📸 CONSTELLATION OF MEMORIES (POLAROID TIMELINE)          -->
+    <!-- ========================================================= -->
+    <section id="memories-section" class="memories-section section-padding">
+      <div class="section-header">
+        <span class="section-tag">Our Orbit Together</span>
+        <h2 class="section-title">Constellation of Memories</h2>
+        <p class="section-desc">A gallery of moments that made this universe infinitely sweeter.</p>
+      </div>
+
+      <div class="memories-grid" id="memories-container">
+        <!-- Rendered dynamically from config.js -->
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 💖 REASONS WHY YOU'RE MY FAVORITE STAR                   -->
+    <!-- ========================================================= -->
+    <section id="reasons-section" class="reasons-section section-padding">
+      <div class="section-header">
+        <span class="section-tag">A Starlit Jar of Love</span>
+        <h2 class="section-title">Reasons You're My Favorite Star</h2>
+        <p class="section-desc">Click each star card to flip and discover why you mean the galaxy to me.</p>
+      </div>
+
+      <div class="reasons-controls">
+        <button id="draw-star-btn" class="celestial-btn glow-btn">
+          ✨ Draw A Star Note
+        </button>
+        <button id="reveal-all-reasons-btn" class="celestial-btn secondary-btn">
+          Flip All Cards
+        </button>
+      </div>
+
+      <div class="reasons-grid" id="reasons-container">
+        <!-- Rendered dynamically from config.js -->
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 🎮 COUPLE QUIZ & MINI GAME                               -->
+    <!-- ========================================================= -->
+    <section id="quiz-section" class="quiz-section section-padding">
+      <div class="section-header">
+        <span class="section-tag">Fun & Games</span>
+        <h2 class="section-title">How Well Do You Know Us?</h2>
+        <p class="section-desc">A playful celestial quiz just for you!</p>
+      </div>
+
+      <div class="quiz-wrapper celestial-glass">
+        <!-- Quiz Active View -->
+        <div id="quiz-card" class="quiz-card">
+          <div class="quiz-header">
+            <span id="quiz-progress-text" class="quiz-step">Question 1 of 10</span>
+            <span id="quiz-score-badge" class="quiz-score-badge">Score: 0</span>
+          </div>
+
+          <div class="quiz-progress-bar-container">
+            <div id="quiz-progress-bar" class="quiz-progress-bar"></div>
+          </div>
+
+          <h3 id="quiz-question" class="quiz-question-title">Loading Question...</h3>
+
+          <div id="quiz-options" class="quiz-options-list">
+            <!-- Options populated dynamically -->
+          </div>
+
+          <div id="quiz-feedback" class="quiz-feedback hidden">
+            <p id="feedback-message"></p>
+            <button id="quiz-next-btn" class="celestial-btn glow-btn">
+              Next Question ➔
+            </button>
+          </div>
+        </div>
+
+        <!-- Quiz Completed Result View -->
+        <div id="quiz-result" class="quiz-result hidden">
+          <div class="result-badge">🏆 100% Soulmate</div>
+          <h3 id="result-title">You are the center of my universe!</h3>
+          <p id="result-score-text">You scored 10 out of 10!</p>
+          <p class="result-message">
+            Regardless of score, you hold the highest record in my heart across all galaxies. ❤️
+          </p>
+          <div class="quiz-actions">
+            <button id="quiz-restart-btn" class="celestial-btn secondary-btn">Play Again ↺</button>
+            <button id="launch-star-catch-btn" class="celestial-btn glow-btn">Play "Catch Falling Stars" 🌠</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bonus Mini-Game: Catch Shooting Stars -->
+      <div id="star-catcher-game" class="star-catcher-game celestial-glass hidden">
+        <div class="game-header">
+          <h3>🌠 Catch The Shooting Stars!</h3>
+          <p>Tap falling stars before they disappear to collect birthday wishes!</p>
+          <div class="game-stats">
+            <span>Stars Caught: <strong id="caught-stars-count">0</strong></span>
+            <button id="close-game-btn" class="close-game-btn">✕ Close Game</button>
+          </div>
+        </div>
+        <div id="game-canvas-area" class="game-canvas-area">
+          <div class="game-instructions">Tap anywhere inside to catch stars!</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 🌌 CELESTIAL FOOTER                                      -->
+    <!-- ========================================================= -->
+    <footer class="celestial-footer">
+      <div class="footer-constellation">✦ ⋆ ✦ ⋆ ✦</div>
+      <p class="footer-main">
+        Crafted with infinite love for <span id="footer-recipient">My Star</span> 💖
+      </p>
+      <p class="footer-sub">
+        Happy Birthday • October 14th • To Infinity & Beyond 🪐
+      </p>
+      <div class="footer-stars">✨ 🌙 ✨</div>
+    </footer>
+
+  </div>
+
+  <!-- Lightbox Modal for Photo Gallery -->
+  <div id="lightbox-modal" class="lightbox-modal hidden">
+    <div class="lightbox-overlay" id="lightbox-overlay"></div>
+    <div class="lightbox-content celestial-glass">
+      <button id="lightbox-close-btn" class="lightbox-close-btn">✕</button>
+      <img id="lightbox-img" src="" alt="Memory Photo" />
+      <h3 id="lightbox-title"></h3>
+      <p id="lightbox-desc"></p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
