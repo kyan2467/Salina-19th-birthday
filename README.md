@@ -87,3 +87,6 @@ When you're ready to share it with her on October 14th:
 ### Option C: GitHub Pages
 1. Push this folder to a GitHub repository.
 2. Go to **Settings > Pages** and select `Deploy from branch: main`.
+
+AI Used for Helping : Gemini
+
